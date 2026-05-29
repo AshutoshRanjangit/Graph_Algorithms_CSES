@@ -18,13 +18,12 @@ void dfs(int node){
     visited[node]=1;
 
     for(auto v:g[node]){
-        if(visited[v]&&par[v]!=node){
+        if(visited[v]&&v!=par[node]){//back edge to parent not 
             is_cycle=1;
             en=v;
             st=node;
         }
-
-        if(!visited[v]){
+        else if(!visited[v]){
             par[v]=node;
             dfs(v);
         }
@@ -46,9 +45,13 @@ void solve()
         g[b].push_back(a);
     }
 
-    dfs(1);
-    vector<int>cycle;
+    for(int i=1;i<=n;i++){
+        if(!visited[i]){
+            dfs(i);
+        }
+    }
 
+    vector<int>cycle;
     if(is_cycle){
 
         int temp=en;
